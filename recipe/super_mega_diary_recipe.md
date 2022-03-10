@@ -85,31 +85,67 @@ see a list
 _Also design the interface of each class in more detail._
 
 ```ruby
-class MusicLibrary
+class Diary
   def initialize
-    # ...
   end
 
-  def add(track) # track is an instance of Track
-    # Track gets added to the library
-    # Returns nothing
+  def add(entry) # Entry is an instance of DiaryEntry
+    # Return nothing
   end
 
-  def all
-    # Returns a list of track objects
+  def read(title) # Title is a string title of a DiaryEntry
+    # Returns the contents of a DiaryEntry 
   end
-  
-  def search_by_title(keyword) # keyword is a string
-    # Returns a list of tracks with titles that include the keyword
+
+  def recommend_entry(time, speed) # Time is time available for reading as an int
+                                   # Speed is reading speed in words per minute as an int
+    # Returns an array list of all entries that could be read within the given time
+  end
+
+  def check_for_contact(entry) # Entry is an instance of DiaryEntry
+    # Gets contacts by calling contents from entry
+    # Only picks up numbers fo the correct length & avoids duplicates
+  end
+
+  def show_contacts
+    # Returns list of contacts
   end
 end
 
-class Track
-  def initialize(title, artist) # title and artist are both strings
+class DiaryEntry
+  def initialize(title, contents)
   end
 
-  def format
-    # Returns a string of the form "TITLE by ARTIST"
+  def title
+  # Returns title
+  end
+
+  def contents
+  # Returns contents
+  end
+
+  def reading_time(speed) # Speed is reading speed in words per minute as an int
+  # Returns time to read the entry in minutes as an int
+  end
+
+  def count_words
+  # Returns number of words in contents as an int
+  end
+end
+
+class Todo
+  def initialize(task) # Task is a string
+  end
+
+  def task
+  # Returns the task
+  end
+
+  def done?
+  # Returns true if done, false otherwise
+  end
+
+  def mark_done!
   end
 end
 ```
