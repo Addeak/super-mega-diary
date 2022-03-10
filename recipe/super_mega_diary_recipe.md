@@ -102,10 +102,16 @@ class Diary
     # Returns an array list of all entries that could be read within the given time
   end
 
+  def add_task(task)
+    # Returns nothing
+  end
+
   def complete
+    # Returns list of tasks marked complete
   end
 
   def incomplete
+    # Returns list of tasks marked incomplete
   end
 
   def check_for_contact(entry) # Entry is an instance of DiaryEntry
@@ -184,7 +190,61 @@ diary.recommend_entry(2,2) # => ["My life is great!"]
 diary.recommend_entry(2,3) # => ["My life is great!", "My life is now absolutely crap!"]
 diary.recommend_entry(3,4) # => ["My life is great!", "My life is now absolutely crap!", "Now it's even worse, everyone I love has abandoned me!"]
 
+# 4
+diary = Diary.new
+task_1 = Todo.new("Get milk")
+diary.add_task(task_1)
+diary.incomplete # => [task_1]
 
+# 5
+diary = Diary.new
+task_1 = Todo.new("Get milk")
+diary.add_task(task_1)
+diary.complete # => []
+
+# 6 
+diary = Diary.new
+task_1 = Todo.new("Get milk")
+task_2 = Todo.new("Get bread")
+diary.add_task(task_1)
+diary.add_task(task_2)
+task_1.mark_done!
+diary.incomplete # => [task_2]
+diary.complete # => [task_1]
+
+# 7
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "07000000000 called today")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+diary.add_entry(entry_1)
+diary.add_entry(entry_2)
+diary.show_contacts # => ["07000000000"]
+
+# 8
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "07000000000 called today")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 2384")
+entry_3 = DiaryEntry.new("2", "My life is now absolutely crap! 07111111111111111")
+diary.add_entry(entry_1)
+diary.add_entry(entry_2)
+diary.add_entry(entry_3)
+diary.show_contacts # => ["07000000000"]
+
+# 9
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "07000000000 called today")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000001")
+diary.add_entry(entry_1)
+diary.add_entry(entry_2)
+diary.show_contacts # => ["07000000000", "07000000001"]
+
+# 10
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "07000000000 called today")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000000")
+diary.add_entry(entry_1)
+diary.add_entry(entry_2)
+diary.show_contacts # => ["07000000000"]
 ```
 
 ## 4. Create Examples as Unit Tests
@@ -219,7 +279,19 @@ entry.reading_time(4) # => 2
 entry = DiaryEntry.new("1", "My life is great!")
 entry.count_words # => 4
 
+## Todo
+# 1
+todo = Todo.new("aaa")
+todo.task # => "aaa"
 
+# 2
+todo = Todo.new("aaa")
+todo.done? # => false
+
+# 3
+todo = Todo.new("aaa")
+todo.mark_done!
+todo.done? # => true
 
 ```
 
