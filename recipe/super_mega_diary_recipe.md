@@ -30,26 +30,56 @@ _Consider diagramming out the classes and their relationships. Take care to
 focus on the details you see as important, not everything. The diagram below
 uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
 
+diary
+diary entries
+reading time
+reading speed
+tasks
+to do list
+contacts
+contact list
+record
+read past entries
+select entries
+see a list
+
 ```
-┌────────────────────────────┐
-│ MusicPlayer                │
-│                            │
-│ - add(track)               │
-│ - all                      │
-│ - search_by_title(keyword) │
-│   => [tracks...]           │
-└───────────┬────────────────┘
-            │
-            │ owns a list of
-            ▼
-┌─────────────────────────┐
-│ Track(title, artist)    │
-│                         │
-│ - title                 │
-│ - artist                │
-│ - format                │
-│   => "TITLE by ARTIST"  │
-└─────────────────────────┘
+┌────────────────────────────────────────────────────┐
+│                                                    │
+│                                                    │
+│     DIARY                                          │
+│    ─────────────────────────                       │
+│                                                    │
+│    add(entry)                                      │
+│                                                    │
+│    read(title)                                     │
+│                                                    │
+│     recommend_entry(time,speed)                    │
+│                                                    │
+│     check_for_contact(entry)                       │
+│                                                    │
+│     show_contacts                                  │
+│                                                    │
+│                                                    │
+│                                                    │
+└────────────────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────────────────┐    ┌──────────────────────────────────────────┐
+│                                                    │    │                                          │
+│    DiaryEntry                                      │    │ Todo                                     │
+│   ─────────────────────────────                    │    │ ──────────────────────────               │
+│                                                    │    │                                          │
+│    title                                           │    │ task                                     │
+│                                                    │    │                                          │
+│    content                                         │    │ done?                                    │
+│                                                    │    │                                          │
+│    reading_time(speed)                             │    │ mark_done!                               │
+│                                                    │    │                                          │
+│    count_words                                     │    │                                          │
+│                                                    │    │                                          │
+│                                                    │    │                                          │
+└────────────────────────────────────────────────────┘    └──────────────────────────────────────────┘
 ```
 
 _Also design the interface of each class in more detail._
