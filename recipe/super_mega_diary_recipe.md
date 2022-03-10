@@ -102,6 +102,12 @@ class Diary
     # Returns an array list of all entries that could be read within the given time
   end
 
+  def complete
+  end
+
+  def incomplete
+  end
+
   def check_for_contact(entry) # Entry is an instance of DiaryEntry
     # Gets contacts by calling contents from entry
     # Only picks up numbers fo the correct length & avoids duplicates
@@ -156,15 +162,29 @@ _Create examples of the classes being used together in different situations and
 combinations that reflect the ways in which the system will be used._
 
 ```ruby
-# EXAMPLE
+# 1
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "My life is great!")
+diary.read("1") # => "My life is great!"
 
-# Gets all tracks
-library = MusicLibrary.new
-track_1 = Track.new("Carte Blanche", "Veracocha")
-track_2 = Track.new("Synaesthesia", "The Thrillseekers")
-library.add(track_1)
-library.add(track_2)
-library.all # => [track_1, track_2]
+# 2
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "My life is great!")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
+diary.read("2") # => "My life is now absolutely crap!"
+
+# 3
+diary = Diary.new
+entry_1 = DiaryEntry.new("1", "My life is great!")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
+diary.recommend_entry(2, 1) # => []
+diary.recommend_entry(2,2) # => ["My life is great!"]
+diary.recommend_entry(2,3) # => ["My life is great!", "My life is now absolutely crap!"]
+diary.recommend_entry(3,4) # => ["My life is great!", "My life is now absolutely crap!", "Now it's even worse, everyone I love has abandoned me!"]
+
+
 ```
 
 ## 4. Create Examples as Unit Tests
@@ -173,11 +193,34 @@ _Create examples, where appropriate, of the behaviour of each relevant class at
 a more granular level of detail._
 
 ```ruby
-# EXAMPLE
+## DiaryEntry
+# 1
+entry = DiaryEntry.new("1", "My life is great!")
+entry.title # => 1
 
-# Constructs a track
-track = Track.new("Carte Blanche", "Veracocha")
-track.title # => "Carte Blanche"
+# 2
+entry = DiaryEntry.new("1", "My life is great!")
+entry.contents # => "My life is great!"
+
+# 3 
+entry_1 = DiaryEntry.new("1", "My life is great!")
+entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
+
+# 4
+entry = DiaryEntry.new("1", "My life is great!")
+entry.reading_time(4) # => 1
+
+# 4
+entry = DiaryEntry.new("1", "Yes, my life is great!")
+entry.reading_time(4) # => 2
+
+# 5
+entry = DiaryEntry.new("1", "My life is great!")
+entry.count_words # => 4
+
+
+
 ```
 
 _Encode each example as a test. You can add to the above list as you go._
