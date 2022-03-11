@@ -231,7 +231,7 @@ entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
 diary.add(entry_1)
 diary.add(entry_2)
-pb = ContactList.new
+pb = ContactList.new(diary)
 pb.grab_contacts
 pb.show_contacts # => ["07000000000"]
 
@@ -243,7 +243,7 @@ entry_3 = DiaryEntry.new("2", "My life is now absolutely crap! 07111111111111111
 diary.add(entry_1)
 diary.add(entry_2)
 diary.add(entry_3)
-pb = ContactList.new
+pb = ContactList.new(diary)
 pb.grab_contacts
 pb.show_contacts # => ["07000000000"]
 
@@ -253,7 +253,7 @@ entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000001")
 diary.add(entry_1)
 diary.add(entry_2)
-pb = ContactList.new
+pb = ContactList.new(diary)
 pb.grab_contacts
 pb.show_contacts # => ["07000000000", "07000000001"]
 
@@ -263,7 +263,7 @@ entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000000")
 diary.add(entry_1)
 diary.add(entry_2)
-pb = ContactList.new
+pb = ContactList.new(diary)
 pb.grab_contacts
 pb.show_contacts # => ["07000000000"]
 ```

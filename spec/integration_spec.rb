@@ -66,8 +66,23 @@ RSpec.describe "integration" do
         list.add(task_1)
         list.add(task_2)
         task_1.mark_done!
-        # expect(list.incomplete).to eq [task_2]
+        expect(list.incomplete).to eq [task_2]
         expect(list.complete).to eq [task_1]
+      end
+    end
+  end
+
+  describe "contact list integration" do
+    context "given diary entries containing phone numbers" do
+      it "can extract them and show them" do
+        diary = Diary.new
+        entry_1 = DiaryEntry.new("1", "07000000000 called today")
+        entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+        diary.add(entry_1)
+        diary.add(entry_2)
+        pb = ContactList.new(diary)
+        pb.grab_contacts
+        expect(pb.show_contacts).to eq ["07000000000"]
       end
     end
   end

@@ -9,6 +9,7 @@ class TodoList
   end
 
   def complete
+    sort_lists
     @complete
   end
 

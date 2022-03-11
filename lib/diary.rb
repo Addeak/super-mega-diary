@@ -3,6 +3,10 @@ class Diary
     @diary = []
   end
 
+  def entries
+    @diary
+  end
+
   def add(entry) 
     @diary << entry
   end
