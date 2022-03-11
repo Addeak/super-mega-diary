@@ -1,13 +1,15 @@
 class DiaryEntry
   def initialize(title, contents)
+    @title = title
+    @contents = contents
   end
 
   def title
-  # Returns title
+    @title
   end
 
   def contents
-  # Returns contents
+    @contents
   end
 
   def reading_time(speed) # Speed is reading speed in words per minute as an int
