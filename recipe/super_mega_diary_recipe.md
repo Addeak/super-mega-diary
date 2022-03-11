@@ -44,42 +44,38 @@ select entries
 see a list
 
 ```
-┌────────────────────────────────────────────────────┐
-│                                                    │
-│                                                    │
-│     DIARY                                          │
-│    ─────────────────────────                       │
-│                                                    │
-│    add(entry)                                      │
-│                                                    │
-│    read(title)                                     │
-│                                                    │
-│     recommend_entry(time,speed)                    │
-│                                                    │
-│     check_for_contact(entry)                       │
-│                                                    │
-│     show_contacts                                  │
-│                                                    │
-│                                                    │
-│                                                    │
-└────────────────────────────────────────────────────┘
+                ┌──────────────────┐
+                │ ContactList      │
+                │ ───────────────  │
+                │ grab_contacts    │
+                │                  │
+                │ show_contacts    │
+                └──────────────────┘
+                          ▲
+┌─────────────────────┐   │     ┌─────────────────┐
+│ Diary               │   │     │DiaryEntry       │
+│ ──────────────────  │   │     ├─────────────    │
+│                     ├───┘     │                 │
+│ add(entry)          │         │title            │
+│                     │         │                 │
+│ read                │         │contents         │
+│                     │◄────────┤                 │
+│ recommend_entry  │  │         │reading_time     │
+│                  └──┼─────────┤►                │
+│                     │         │count_words      │
+└─────────────────────┘         └─────────────────┘
 
 
-┌────────────────────────────────────────────────────┐    ┌──────────────────────────────────────────┐
-│                                                    │    │                                          │
-│    DiaryEntry                                      │    │ Todo                                     │
-│   ─────────────────────────────                    │    │ ──────────────────────────               │
-│                                                    │    │                                          │
-│    title                                           │    │ task                                     │
-│                                                    │    │                                          │
-│    content                                         │    │ done?                                    │
-│                                                    │    │                                          │
-│    reading_time(speed)                             │    │ mark_done!                               │
-│                                                    │    │                                          │
-│    count_words                                     │    │                                          │
-│                                                    │    │                                          │
-│                                                    │    │                                          │
-└────────────────────────────────────────────────────┘    └──────────────────────────────────────────┘
+┌────────────────────┐       ┌─────────────────┐
+│TodoList            │       │  Todo           │
+├─────────────────   │       │ ──────────────  │
+│                    │       │                 │
+│add(task)           │       │ task            │
+│                    │◄──────┤                 │
+│complete            │       │ done?           │
+│                    │       │                 │
+│incomplete          │       │ mark_done!      │
+└────────────────────┘       └─────────────────┘
 ```
 
 _Also design the interface of each class in more detail._
@@ -142,7 +138,7 @@ class TodoList
   def initialize
   end
 
-  def add_task(task)
+  def add(task)
     # Returns nothing
   end
 
@@ -181,6 +177,7 @@ combinations that reflect the ways in which the system will be used._
 # 1
 diary = Diary.new
 entry_1 = DiaryEntry.new("1", "My life is great!")
+diary.add(entry_1)
 diary.read("1") # => "My life is great!"
 
 # 2
@@ -188,6 +185,9 @@ diary = Diary.new
 entry_1 = DiaryEntry.new("1", "My life is great!")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
 entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
+diary.add(entry_1)
+diary.add(entry_2)
+diary.add(entry_3)
 diary.read("2") # => "My life is now absolutely crap!"
 
 # 3
@@ -195,6 +195,9 @@ diary = Diary.new
 entry_1 = DiaryEntry.new("1", "My life is great!")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
 entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
+diary.add(entry_1)
+diary.add(entry_2)
+diary.add(entry_3)
 diary.recommend_entry(2, 1) # => []
 diary.recommend_entry(2,2) # => ["My life is great!"]
 diary.recommend_entry(2,3) # => ["My life is great!", "My life is now absolutely crap!"]
@@ -203,21 +206,21 @@ diary.recommend_entry(3,4) # => ["My life is great!", "My life is now absolutely
 # 4
 list = TodoList.new
 task_1 = Todo.new("Get milk")
-list.add_task(task_1)
+list.add(task_1)
 list.incomplete # => [task_1]
 
 # 5
 list = TodoList.new
 task_1 = Todo.new("Get milk")
-list.add_task(task_1)
+list.add(task_1)
 list.complete # => []
 
 # 6 
 list = TodoList.new
 task_1 = Todo.new("Get milk")
 task_2 = Todo.new("Get bread")
-list.add_task(task_1)
-list.add_task(task_2)
+list.add(task_1)
+list.add(task_2)
 task_1.mark_done!
 list.incomplete # => [task_2]
 list.complete # => [task_1]
@@ -226,8 +229,8 @@ list.complete # => [task_1]
 diary = Diary.new
 entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
-diary.add_entry(entry_1)
-diary.add_entry(entry_2)
+diary.add(entry_1)
+diary.add(entry_2)
 pb = ContactList.new
 pb.grab_contacts
 pb.show_contacts # => ["07000000000"]
@@ -237,9 +240,9 @@ diary = Diary.new
 entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 2384")
 entry_3 = DiaryEntry.new("2", "My life is now absolutely crap! 07111111111111111")
-diary.add_entry(entry_1)
-diary.add_entry(entry_2)
-diary.add_entry(entry_3)
+diary.add(entry_1)
+diary.add(entry_2)
+diary.add(entry_3)
 pb = ContactList.new
 pb.grab_contacts
 pb.show_contacts # => ["07000000000"]
@@ -248,8 +251,8 @@ pb.show_contacts # => ["07000000000"]
 diary = Diary.new
 entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000001")
-diary.add_entry(entry_1)
-diary.add_entry(entry_2)
+diary.add(entry_1)
+diary.add(entry_2)
 pb = ContactList.new
 pb.grab_contacts
 pb.show_contacts # => ["07000000000", "07000000001"]
@@ -258,8 +261,8 @@ pb.show_contacts # => ["07000000000", "07000000001"]
 diary = Diary.new
 entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000000")
-diary.add_entry(entry_1)
-diary.add_entry(entry_2)
+diary.add(entry_1)
+diary.add(entry_2)
 pb = ContactList.new
 pb.grab_contacts
 pb.show_contacts # => ["07000000000"]
