@@ -101,22 +101,15 @@ class Diary
                                    # Speed is reading speed in words per minute as an int
     # Returns an array list of all entries that could be read within the given time
   end
+end
 
-  def add_task(task)
-    # Returns nothing
+class ContactList
+  def initialize
   end
 
-  def complete
-    # Returns list of tasks marked complete
-  end
-
-  def incomplete
-    # Returns list of tasks marked incomplete
-  end
-
-  def check_for_contact(entry) # Entry is an instance of DiaryEntry
+  def grab_contacts
     # Gets contacts by calling contents from entry
-    # Only picks up numbers fo the correct length & avoids duplicates
+    # Only picks up numbers of the correct length & avoids duplicates
   end
 
   def show_contacts
@@ -142,6 +135,23 @@ class DiaryEntry
 
   def count_words
   # Returns number of words in contents as an int
+  end
+end
+
+class TodoList
+  def initialize
+  end
+
+  def add_task(task)
+    # Returns nothing
+  end
+
+  def complete
+    # Returns list of tasks marked complete
+  end
+
+  def incomplete
+    # Returns list of tasks marked incomplete
   end
 end
 
@@ -191,26 +201,26 @@ diary.recommend_entry(2,3) # => ["My life is great!", "My life is now absolutely
 diary.recommend_entry(3,4) # => ["My life is great!", "My life is now absolutely crap!", "Now it's even worse, everyone I love has abandoned me!"]
 
 # 4
-diary = Diary.new
+list = TodoList.new
 task_1 = Todo.new("Get milk")
-diary.add_task(task_1)
-diary.incomplete # => [task_1]
+list.add_task(task_1)
+list.incomplete # => [task_1]
 
 # 5
-diary = Diary.new
+list = TodoList.new
 task_1 = Todo.new("Get milk")
-diary.add_task(task_1)
-diary.complete # => []
+list.add_task(task_1)
+list.complete # => []
 
 # 6 
-diary = Diary.new
+list = TodoList.new
 task_1 = Todo.new("Get milk")
 task_2 = Todo.new("Get bread")
-diary.add_task(task_1)
-diary.add_task(task_2)
+list.add_task(task_1)
+list.add_task(task_2)
 task_1.mark_done!
-diary.incomplete # => [task_2]
-diary.complete # => [task_1]
+list.incomplete # => [task_2]
+list.complete # => [task_1]
 
 # 7
 diary = Diary.new
@@ -218,7 +228,9 @@ entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
 diary.add_entry(entry_1)
 diary.add_entry(entry_2)
-diary.show_contacts # => ["07000000000"]
+pb = ContactList.new
+pb.grab_contacts
+pb.show_contacts # => ["07000000000"]
 
 # 8
 diary = Diary.new
@@ -228,7 +240,9 @@ entry_3 = DiaryEntry.new("2", "My life is now absolutely crap! 07111111111111111
 diary.add_entry(entry_1)
 diary.add_entry(entry_2)
 diary.add_entry(entry_3)
-diary.show_contacts # => ["07000000000"]
+pb = ContactList.new
+pb.grab_contacts
+pb.show_contacts # => ["07000000000"]
 
 # 9
 diary = Diary.new
@@ -236,7 +250,9 @@ entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000001")
 diary.add_entry(entry_1)
 diary.add_entry(entry_2)
-diary.show_contacts # => ["07000000000", "07000000001"]
+pb = ContactList.new
+pb.grab_contacts
+pb.show_contacts # => ["07000000000", "07000000001"]
 
 # 10
 diary = Diary.new
@@ -244,7 +260,9 @@ entry_1 = DiaryEntry.new("1", "07000000000 called today")
 entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000000")
 diary.add_entry(entry_1)
 diary.add_entry(entry_2)
-diary.show_contacts # => ["07000000000"]
+pb = ContactList.new
+pb.grab_contacts
+pb.show_contacts # => ["07000000000"]
 ```
 
 ## 4. Create Examples as Unit Tests
@@ -261,11 +279,6 @@ entry.title # => 1
 # 2
 entry = DiaryEntry.new("1", "My life is great!")
 entry.contents # => "My life is great!"
-
-# 3 
-entry_1 = DiaryEntry.new("1", "My life is great!")
-entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
-entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
 
 # 4
 entry = DiaryEntry.new("1", "My life is great!")
@@ -293,6 +306,18 @@ todo = Todo.new("aaa")
 todo.mark_done!
 todo.done? # => true
 
+## TodoList
+# 1
+list = Todolist.new
+list.complete # => []
+
+# 2
+list = TodoList.new
+list.incomplete # => []
+
+##Diary
+# 1
+diary = Diary.new
 ```
 
 _Encode each example as a test. You can add to the above list as you go._
@@ -301,14 +326,3 @@ _Encode each example as a test. You can add to the above list as you go._
 
 _After each test you write, follow the test-driving process of red, green,
 refactor to implement the behaviour._
-
-
-<!-- BEGIN GENERATED SECTION DO NOT EDIT -->
-
----
-
-**How was this resource?**  
-[😫](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy/golden-square&prefill_File=resources/multi_class_recipe_template.md&prefill_Sentiment=😫) [😕](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy/golden-square&prefill_File=resources/multi_class_recipe_template.md&prefill_Sentiment=😕) [😐](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy/golden-square&prefill_File=resources/multi_class_recipe_template.md&prefill_Sentiment=😐) [🙂](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy/golden-square&prefill_File=resources/multi_class_recipe_template.md&prefill_Sentiment=🙂) [😀](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy/golden-square&prefill_File=resources/multi_class_recipe_template.md&prefill_Sentiment=😀)  
-Click an emoji to tell us.
-
-<!-- END GENERATED SECTION DO NOT EDIT -->
