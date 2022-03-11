@@ -13,8 +13,14 @@ class Diary
     end
   end
 
-  def recommend_entry(time, speed) # Time is time available for reading as an int
-                                   # Speed is reading speed in words per minute as an int
-    # Returns an array list of all entries that could be read within the given time
+  def recommend_entry(time, speed) 
+    recommended = []
+    readable_words = time * speed
+    @diary.each do |entry|
+      if entry.count_words <= readable_words
+        recommended << entry.title 
+      end
+    end
+    recommended
   end
 end
