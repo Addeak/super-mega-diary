@@ -43,11 +43,31 @@ RSpec.describe "integration" do
 
   describe "todo list integration" do
     context "given a task which is not done" do
-      xit "returns the task in a list of incomplete tasks" do
+      it "returns the task in a list of incomplete tasks" do
         list = TodoList.new
         task_1 = Todo.new("Get milk")
         list.add(task_1)
         expect(list.incomplete).to eq [task_1]
+      end
+
+      it "does not return the task in a list of complete tasks" do
+        list = TodoList.new
+        task_1 = Todo.new("Get milk")
+        list.add(task_1)
+        expect(list.complete).to eq []
+      end
+    end
+
+    context "when given several tasks and some are completed" do
+      it "returns lists of complete and incomplete tasks" do
+        list = TodoList.new
+        task_1 = Todo.new("Get milk")
+        task_2 = Todo.new("Get bread")
+        list.add(task_1)
+        list.add(task_2)
+        task_1.mark_done!
+        # expect(list.incomplete).to eq [task_2]
+        expect(list.complete).to eq [task_1]
       end
     end
   end

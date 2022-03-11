@@ -1,16 +1,30 @@
 class TodoList
   def initialize
+    @complete = []
+    @incomplete = []
   end
 
   def add(task)
-    # Returns nothing
+    @incomplete << task
   end
 
   def complete
-    # Returns list of tasks marked complete
+    @complete
   end
 
   def incomplete
-    # Returns list of tasks marked incomplete
+    sort_lists
+    @incomplete
+  end
+
+  private
+
+  def sort_lists
+    @incomplete.each do |task|
+      if task.done?
+        @complete.push(task) 
+        @incomplete.delete(task)
+      end
+    end
   end
 end
