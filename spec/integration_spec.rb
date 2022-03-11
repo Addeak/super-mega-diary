@@ -35,18 +35,20 @@ RSpec.describe "integration" do
       diary.add(entry_2)
       diary.add(entry_3)
       expect(diary.recommend_entry(2, 1)).to eq []
-      diary.recommend_entry(2, 2).to eq ["1"]
-      diary.recommend_entry(2, 3) # => ["My life is great!", "My life is now absolutely crap!"]
-      diary.recommend_entry(3, 4) # => ["My life is great!", "My life is now absolutely crap!", "Now it's even worse, everyone I love has abandoned me!"]
+      expect(diary.recommend_entry(2, 2)).to eq ["1"]
+      expect(diary.recommend_entry(2, 3)).to eq ["1", "2"]
+      expect(diary.recommend_entry(3, 4)).to eq ["1", "2", "3"]
     end
+  end
 
-    it "recommends a list of readable entries based on available time and wpm" do
-      diary = Diary.new
-      entry_1 = DiaryEntry.new("1", "My life is great!")
-      entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
-      entry_3 = DiaryEntry.new("3", "Now it's even worse, everyone I love has abandoned me!")
-      diary.add(entry_1)
-      diary.add(entry_2)
-      diary.add(entry_3)
+  describe "todo list integration" do
+    context "given a task which is not done" do
+      xit "returns the task in a list of incomplete tasks" do
+        list = TodoList.new
+        task_1 = Todo.new("Get milk")
+        list.add(task_1)
+        expect(list.incomplete).to eq [task_1]
+      end
+    end
   end
 end
