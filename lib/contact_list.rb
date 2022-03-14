@@ -6,17 +6,11 @@ class ContactList
 
   def grab_contacts
     @diary.entries.each do |entry|
-      @contacts << entry.contents.scan(/[0-9]{11}/)
+      @contacts << entry.contents.scan(/\d{11}/)
     end
   end
 
-      
-    
-    # Gets contacts by calling contents from entry
-    # Only picks up numbers of the correct length & avoids duplicates
-
-
   def show_contacts
-    @contacts.flatten
+    @contacts.flatten.uniq
   end
 end

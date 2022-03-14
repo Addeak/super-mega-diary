@@ -73,11 +73,37 @@ RSpec.describe "integration" do
   end
 
   describe "contact list integration" do
+    context "given diary entries containing a phone number" do
+      it "can extract it and show it" do
+        diary = Diary.new
+        entry_1 = DiaryEntry.new("1", "07000000000 called today")
+        entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+        diary.add(entry_1)
+        diary.add(entry_2)
+        pb = ContactList.new(diary)
+        pb.grab_contacts
+        expect(pb.show_contacts).to eq ["07000000000"]
+      end
+    end
+
     context "given diary entries containing phone numbers" do
       it "can extract them and show them" do
         diary = Diary.new
         entry_1 = DiaryEntry.new("1", "07000000000 called today")
-        entry_2 = DiaryEntry.new("2", "My life is now absolutely crap!")
+        entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000001")
+        diary.add(entry_1)
+        diary.add(entry_2)
+        pb = ContactList.new(diary)
+        pb.grab_contacts
+        expect(pb.show_contacts).to eq ["07000000000", "07000000001"]
+      end
+    end
+
+    context "given duplicate phones numbers" do
+      it "does not store and show the duplicates" do
+        diary = Diary.new
+        entry_1 = DiaryEntry.new("1", "07000000000 called today")
+        entry_2 = DiaryEntry.new("2", "My life is now absolutely crap! 07000000000")
         diary.add(entry_1)
         diary.add(entry_2)
         pb = ContactList.new(diary)

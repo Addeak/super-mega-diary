@@ -20,11 +20,13 @@ class Diary
   def recommend_entry(time, speed) 
     recommended = []
     readable_words = time * speed
+
     @diary.each do |entry|
       if entry.count_words <= readable_words
         recommended << entry.title 
       end
     end
+    
     recommended
   end
 end
